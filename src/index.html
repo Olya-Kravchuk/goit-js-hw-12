@@ -8,7 +8,15 @@
     <link rel="stylesheet" href="./css/styles.css" />
   </head>
   <body>
+    <form class="search-form">
+      <input type="text" class="search-input" name="query" placeholder="Search images..." />
+      <button type="submit" class="search-btn">Search</button>
+    </form>
+    <span class="loader hidden"></span>
+      
+    <ul class="gallery"></ul>
     
+    <button class="load-more">Load more</button>
 
     <script type="module" src="./main.js"></script>
   </body>
