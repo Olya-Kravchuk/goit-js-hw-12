@@ -10,7 +10,10 @@ const loader = document.querySelector('.loader');
 const loadMoreBtn = document.querySelector('.load-more');
 let currentPage = 1;
 let query = '';
+let totalPages = 0;
+const perPage = 15;
 
+loadMoreBtn.classList.add('hidden');
 form.addEventListener('submit', onFormSubmit);
 loadMoreBtn.addEventListener('click', onLoadMore);
 
@@ -30,6 +33,8 @@ async function onFormSubmit(event) {
 
     try {
         const data = await getGallery(query, currentPage);
+        totalPages = Math.ceil(data.totalHits / perPage);
+        loadMoreBtn.classList.remove('hidden');
         handleGalleryResponse(data);
     } catch (error) {
         console.error(error);
@@ -62,8 +67,11 @@ function handleGalleryResponse(data) {
         renderGallery(data);
     }
 
-    if (currentPage * data.hits.length >= data.totalHits) {
+    if (currentPage >= totalPages) {
         loadMoreBtn.classList.add('hidden');
+        if (currentPage > totalPages) {
+            showNotification("We're sorry, but you've reached the end of search results.");
+        }
     } else {
         loadMoreBtn.classList.remove('hidden');
     }
