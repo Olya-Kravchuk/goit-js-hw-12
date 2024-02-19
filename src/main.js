@@ -35,6 +35,11 @@ async function onFormSubmit(event) {
         const data = await getGallery(query, currentPage);
         totalPages = Math.ceil(data.totalHits / perPage);
         loadMoreBtn.classList.remove('hidden');
+            if (currentPage >= totalPages) {
+        loadMoreBtn.classList.add('hidden');
+    } else {
+        loadMoreBtn.classList.remove('hidden');
+    }
         handleGalleryResponse(data);
     } catch (error) {
         console.error(error);
@@ -69,9 +74,7 @@ function handleGalleryResponse(data) {
 
     if (currentPage >= totalPages) {
         loadMoreBtn.classList.add('hidden');
-        if (currentPage > totalPages) {
             showNotification("We're sorry, but you've reached the end of search results.");
-        }
     } else {
         loadMoreBtn.classList.remove('hidden');
     }
